@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Mail, MessageSquare, Send, Zap } from 'lucide-react'
+import { Mail, MessageSquare, Send, Zap, Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 
 export default function ContatoPage() {
   const [formData, setFormData] = useState({
@@ -11,13 +11,65 @@ export default function ContatoPage() {
     tipo: '',
     mensagem: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+    
+    if (!formData.nome.trim()) {
+      newErrors.nome = 'Nome é obrigatório'
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'E-mail é obrigatório'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'E-mail inválido'
+    }
+    
+    if (!formData.tipo) {
+      newErrors.tipo = 'Selecione o tipo de contato'
+    }
+    
+    if (!formData.mensagem.trim()) {
+      newErrors.mensagem = 'Mensagem é obrigatória'
+    } else if (formData.mensagem.trim().length < 10) {
+      newErrors.mensagem = 'Mensagem deve ter pelo menos 10 caracteres'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Integração com Formspree, Firebase ou outro serviço
-    console.log('Form submitted:', formData)
-    alert('Obrigado pelo contato! Responderemos em breve.')
-    setFormData({ nome: '', email: '', tipo: '', mensagem: '' })
+    
+    if (!validateForm()) {
+      return
+    }
+    
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    
+    try {
+      // Integração com Formspree, Firebase ou outro serviço
+      // Simulando chamada de API
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      console.log('Form submitted:', formData)
+      setSubmitStatus('success')
+      setFormData({ nome: '', email: '', tipo: '', mensagem: '' })
+      setErrors({})
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } catch (error) {
+      setSubmitStatus('error')
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -48,6 +100,20 @@ export default function ContatoPage() {
             className="glass-effect p-8 md:p-12 rounded-2xl"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              {submitStatus === 'success' && (
+                <div className="p-4 bg-green-500/20 border border-green-500/50 rounded-lg flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <p className="text-green-400">Obrigado pelo contato! Responderemos em breve.</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg flex items-center gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                  <p className="text-red-400">Erro ao enviar mensagem. Tente novamente.</p>
+                </div>
+              )}
+
               <div>
                 <label htmlFor="nome" className="block text-sm font-medium mb-2">
                   Nome completo *
@@ -57,9 +123,19 @@ export default function ContatoPage() {
                   id="nome"
                   required
                   value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  onChange={(e) => {
+                    setFormData({ ...formData, nome: e.target.value })
+                    if (errors.nome) setErrors({ ...errors, nome: '' })
+                  }}
+                  className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.nome 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-white/20 focus:ring-primary'
+                  }`}
                 />
+                {errors.nome && (
+                  <p className="mt-1 text-sm text-red-400">{errors.nome}</p>
+                )}
               </div>
 
               <div>
@@ -71,9 +147,19 @@ export default function ContatoPage() {
                   id="email"
                   required
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value })
+                    if (errors.email) setErrors({ ...errors, email: '' })
+                  }}
+                  className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.email 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-white/20 focus:ring-primary'
+                  }`}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-400">{errors.email}</p>
+                )}
               </div>
 
               <div>
@@ -84,8 +170,15 @@ export default function ContatoPage() {
                   id="tipo"
                   required
                   value={formData.tipo}
-                  onChange={(e) => setFormData({ ...formData, tipo: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  onChange={(e) => {
+                    setFormData({ ...formData, tipo: e.target.value })
+                    if (errors.tipo) setErrors({ ...errors, tipo: '' })
+                  }}
+                  className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.tipo 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-white/20 focus:ring-primary'
+                  }`}
                 >
                   <option value="">Selecione...</option>
                   <option value="usuario">Usuário</option>
@@ -94,6 +187,9 @@ export default function ContatoPage() {
                   <option value="investidor">Investidor</option>
                   <option value="geral">Geral</option>
                 </select>
+                {errors.tipo && (
+                  <p className="mt-1 text-sm text-red-400">{errors.tipo}</p>
+                )}
               </div>
 
               <div>
@@ -105,17 +201,37 @@ export default function ContatoPage() {
                   required
                   rows={6}
                   value={formData.mensagem}
-                  onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                  onChange={(e) => {
+                    setFormData({ ...formData, mensagem: e.target.value })
+                    if (errors.mensagem) setErrors({ ...errors, mensagem: '' })
+                  }}
+                  className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 resize-none ${
+                    errors.mensagem 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-white/20 focus:ring-primary'
+                  }`}
                 />
+                {errors.mensagem && (
+                  <p className="mt-1 text-sm text-red-400">{errors.mensagem}</p>
+                )}
               </div>
 
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-semibold text-lg flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="w-full px-8 py-4 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-semibold text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5" />
-                Enviar mensagem
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Enviar mensagem
+                  </>
+                )}
               </button>
             </form>
           </motion.div>
@@ -147,31 +263,31 @@ export default function ContatoPage() {
               <p className="text-sm text-gray-400">contato@linkup.app</p>
             </motion.a>
 
-            <motion.a
-              href="#"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-transform"
+              aria-label="WhatsApp em breve"
             >
-              <MessageSquare className="w-10 h-10 text-primary mx-auto mb-4" />
+              <MessageSquare className="w-10 h-10 text-primary mx-auto mb-4" aria-hidden="true" />
               <h3 className="font-bold mb-2">WhatsApp</h3>
               <p className="text-sm text-gray-400">Em breve</p>
-            </motion.a>
+            </motion.div>
 
-            <motion.a
-              href="#"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
               className="glass-effect p-6 rounded-xl text-center hover:scale-105 transition-transform"
+              aria-label="Discord em breve"
             >
-              <Zap className="w-10 h-10 text-primary mx-auto mb-4" />
+              <Zap className="w-10 h-10 text-primary mx-auto mb-4" aria-hidden="true" />
               <h3 className="font-bold mb-2">Discord</h3>
               <p className="text-sm text-gray-400">Em breve</p>
-            </motion.a>
+            </motion.div>
           </div>
         </div>
       </section>

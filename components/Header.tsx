@@ -22,8 +22,8 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 glass-effect">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <Zap className="w-6 h-6 text-primary group-hover:text-neon-purple transition-colors" />
+          <Link href="/" className="flex items-center space-x-2 group" aria-label="Link Up - Página inicial">
+            <Zap className="w-6 h-6 text-primary group-hover:text-neon-purple transition-colors" aria-hidden="true" />
             <span className="text-xl font-bold font-display text-gradient">Link Up</span>
           </Link>
 
@@ -50,9 +50,10 @@ export default function Header() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
 

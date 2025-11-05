@@ -10,7 +10,8 @@ import {
   ArrowRight,
   CheckCircle,
   Zap,
-  Target
+  Target,
+  Loader2
 } from 'lucide-react'
 
 export default function ProdutoresPage() {
@@ -20,6 +21,9 @@ export default function ProdutoresPage() {
     tipoEvento: '',
     cidade: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const beneficios = [
     {
@@ -50,11 +54,59 @@ export default function ProdutoresPage() {
     { step: '3', title: 'Ative o link up social', desc: 'Conecte-se com o público e comece a vender' },
   ]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+    
+    if (!formData.nome.trim()) {
+      newErrors.nome = 'Nome é obrigatório'
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'E-mail é obrigatório'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'E-mail inválido'
+    }
+    
+    if (!formData.tipoEvento) {
+      newErrors.tipoEvento = 'Selecione o tipo de evento'
+    }
+    
+    if (!formData.cidade.trim()) {
+      newErrors.cidade = 'Cidade é obrigatória'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Aqui você pode integrar com Formspree, Firebase ou outro serviço
-    console.log('Form submitted:', formData)
-    alert('Obrigado! Entraremos em contato em breve.')
+    
+    if (!validateForm()) {
+      return
+    }
+    
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    
+    try {
+      // Aqui você pode integrar com Formspree, Firebase ou outro serviço
+      // Simulando chamada de API
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      console.log('Form submitted:', formData)
+      setSubmitStatus('success')
+      setFormData({ nome: '', email: '', tipoEvento: '', cidade: '' })
+      setErrors({})
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } catch (error) {
+      setSubmitStatus('error')
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -154,44 +206,84 @@ export default function ProdutoresPage() {
               </h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-500/20 border border-green-500/50 rounded-lg flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <p className="text-green-400">Obrigado! Entraremos em contato em breve.</p>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
+                    <p className="text-red-400">Erro ao enviar formulário. Tente novamente.</p>
+                  </div>
+                )}
+
                 <div>
                   <label htmlFor="nome" className="block text-sm font-medium mb-2">
-                    Nome completo
+                    Nome completo *
                   </label>
                   <input
                     type="text"
                     id="nome"
                     required
                     value={formData.nome}
-                    onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    onChange={(e) => {
+                      setFormData({ ...formData, nome: e.target.value })
+                      if (errors.nome) setErrors({ ...errors, nome: '' })
+                    }}
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.nome 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-white/20 focus:ring-primary'
+                    }`}
                   />
+                  {errors.nome && (
+                    <p className="mt-1 text-sm text-red-400">{errors.nome}</p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    E-mail
+                    E-mail *
                   </label>
                   <input
                     type="email"
                     id="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value })
+                      if (errors.email) setErrors({ ...errors, email: '' })
+                    }}
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.email 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-white/20 focus:ring-primary'
+                    }`}
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-400">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="tipoEvento" className="block text-sm font-medium mb-2">
-                    Tipo de evento
+                    Tipo de evento *
                   </label>
                   <select
                     id="tipoEvento"
                     required
                     value={formData.tipoEvento}
-                    onChange={(e) => setFormData({ ...formData, tipoEvento: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    onChange={(e) => {
+                      setFormData({ ...formData, tipoEvento: e.target.value })
+                      if (errors.tipoEvento) setErrors({ ...errors, tipoEvento: '' })
+                    }}
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.tipoEvento 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-white/20 focus:ring-primary'
+                    }`}
                   >
                     <option value="">Selecione...</option>
                     <option value="show">Show/Música</option>
@@ -201,28 +293,51 @@ export default function ProdutoresPage() {
                     <option value="tech">Tech/Startup</option>
                     <option value="outro">Outro</option>
                   </select>
+                  {errors.tipoEvento && (
+                    <p className="mt-1 text-sm text-red-400">{errors.tipoEvento}</p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="cidade" className="block text-sm font-medium mb-2">
-                    Cidade
+                    Cidade *
                   </label>
                   <input
                     type="text"
                     id="cidade"
                     required
                     value={formData.cidade}
-                    onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    onChange={(e) => {
+                      setFormData({ ...formData, cidade: e.target.value })
+                      if (errors.cidade) setErrors({ ...errors, cidade: '' })
+                    }}
+                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg focus:outline-none focus:ring-2 ${
+                      errors.cidade 
+                        ? 'border-red-500 focus:ring-red-500' 
+                        : 'border-white/20 focus:ring-primary'
+                    }`}
                   />
+                  {errors.cidade && (
+                    <p className="mt-1 text-sm text-red-400">{errors.cidade}</p>
+                  )}
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-semibold text-lg flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-4 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-semibold text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Solicitar acesso
-                  <ArrowRight className="w-5 h-5" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      Solicitar acesso
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
             </div>

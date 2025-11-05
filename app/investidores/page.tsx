@@ -23,7 +23,7 @@ export default function InvestidoresPage() {
   ]
 
   return (
-    <div className="pt-16 bg-white">
+    <div className="pt-16 bg-white text-gray-900">
       {/* Hero Investidores */}
       <section className="py-12 container mx-auto px-4">
         <motion.div
@@ -34,7 +34,7 @@ export default function InvestidoresPage() {
           <h1 className="text-4xl md:text-5xl font-bold font-display mb-4 text-gradient">
             Investidores
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 mb-6">
+          <p className="text-lg md:text-xl text-gray-800 mb-6">
             Faça parte da revolução na forma como as pessoas descobrem e vivem eventos.
           </p>
         </motion.div>
@@ -78,11 +78,11 @@ export default function InvestidoresPage() {
               className="text-center"
             >
               <a
-                href="#"
+                href="mailto:invest@linkup.app?subject=Solicitação de Deck de Investimento"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary text-white rounded-full hover:opacity-90 transition-opacity font-semibold"
               >
                 <Download className="w-4 h-4" />
-                Baixar Deck (PDF)
+                Solicitar Deck (PDF)
               </a>
             </motion.div>
           </div>
@@ -185,12 +185,15 @@ export default function InvestidoresPage() {
               <p className="text-gray-700 mb-4 text-base">
                 Acompanhe nossos comunicados oficiais e novidades.
               </p>
-              <div className="space-y-2">
+                  <div className="space-y-2">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
                     <span className="text-sm text-gray-700">Release {i} — {new Date().toLocaleDateString('pt-BR')}</span>
-                    <a href="#" className="text-primary hover:text-primary/80 text-sm font-medium">
-                      Baixar PDF
+                    <a 
+                      href="mailto:imprensa@linkup.app?subject=Solicitação de Release"
+                      className="text-primary hover:text-primary/80 text-sm font-medium"
+                    >
+                      Solicitar PDF
                     </a>
                   </div>
                 ))}
@@ -203,11 +206,11 @@ export default function InvestidoresPage() {
                 Logos, fotos oficiais e materiais de marca disponíveis para download.
               </p>
               <a
-                href="#"
+                href="mailto:imprensa@linkup.app?subject=Solicitação de Kit de Mídia"
                 className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-sm"
               >
                 <Download className="w-4 h-4" />
-                Baixar kit de mídia
+                Solicitar kit de mídia
               </a>
             </div>
           </div>
@@ -240,7 +243,10 @@ export default function InvestidoresPage() {
                 invest@linkup.app
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/linkup"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn da Link Up"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full hover:bg-gray-50 transition-all font-medium text-sm shadow-md border border-gray-200 text-gray-900"
               >
                 <Linkedin className="w-4 h-4" />

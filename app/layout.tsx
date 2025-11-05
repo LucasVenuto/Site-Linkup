@@ -12,9 +12,31 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Link Up — Conecte-se com o seu próximo evento',
+  title: {
+    default: 'Link Up — Conecte-se com o seu próximo evento',
+    template: '%s | Link Up',
+  },
   description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar. Plataforma social para eventos.',
   keywords: 'eventos, rede social, plataforma de eventos, conexão, experiências',
+  authors: [{ name: 'Link Up' }],
+  creator: 'Link Up',
+  metadataBase: new URL('https://linkup.app'),
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'Link Up',
+    title: 'Link Up — Conecte-se com o seu próximo evento',
+    description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Link Up — Conecte-se com o seu próximo evento',
+    description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({

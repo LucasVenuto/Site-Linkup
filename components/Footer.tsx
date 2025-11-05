@@ -15,16 +15,38 @@ export default function Footer() {
               Conectando pessoas, cenas e experiências.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a 
+                href="https://www.linkedin.com/company/linkup" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="LinkedIn da Link Up"
+                className="text-gray-400 hover:text-primary transition-colors"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a 
+                href="https://www.instagram.com/linkup" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Instagram da Link Up"
+                className="text-gray-400 hover:text-primary transition-colors"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a 
+                href="https://twitter.com/linkup" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Twitter da Link Up"
+                className="text-gray-400 hover:text-primary transition-colors"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="mailto:contato@linkup.app" className="text-gray-400 hover:text-primary transition-colors">
+              <a 
+                href="mailto:contato@linkup.app" 
+                aria-label="E-mail de contato"
+                className="text-gray-400 hover:text-primary transition-colors"
+              >
                 <Mail className="w-5 h-5" />
               </a>
             </div>

@@ -184,6 +184,9 @@ export default function SobrePage() {
                 <p className="text-gray-300 mb-4">{pessoa.bio}</p>
                 <a
                   href={pessoa.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`LinkedIn de ${pessoa.nome}`}
                   className="inline-flex items-center gap-2 text-primary hover:text-neon-purple transition-colors"
                 >
                   <Linkedin className="w-5 h-5" />
