@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-neon-purple;
+  }
+  
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-primary via-purple-600 to-neon-purple;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-sm bg-white/5 border border-white/10;
+  }
+  
+  .glow-effect {
+    box-shadow: 0 0 20px rgba(106, 27, 154, 0.5);
+  }
+}
+
