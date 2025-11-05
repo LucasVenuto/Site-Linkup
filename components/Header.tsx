@@ -13,8 +13,6 @@ export default function Header() {
     { href: '/sobre', label: 'Sobre' },
     { href: '/plataforma', label: 'A Plataforma' },
     { href: '/produtores', label: 'Para Produtores' },
-    { href: '/investidores', label: 'Investidores' },
-    { href: '/blog', label: 'Blog' },
     { href: '/contato', label: 'Contato' },
   ]
 

@@ -259,18 +259,12 @@ export default function Home() {
             <p className="text-xl text-gray-300 mb-12">
               Faça parte da revolução na forma como as pessoas descobrem e vivem eventos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Link
                 href="/contato"
                 className="px-8 py-4 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-semibold text-lg"
               >
                 Quero participar
-              </Link>
-              <Link
-                href="/investidores"
-                className="px-8 py-4 glass-effect text-white rounded-full hover:bg-white/20 transition-all font-semibold text-lg"
-              >
-                Quero investir
               </Link>
             </div>
           </motion.div>
