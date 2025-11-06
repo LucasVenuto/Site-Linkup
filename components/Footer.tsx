@@ -1,49 +1,52 @@
 import Link from 'next/link'
-import { Linkedin, Instagram, Twitter, Mail } from 'lucide-react'
+import { Linkedin, Instagram, Twitter, Mail, Sparkles } from 'lucide-react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-black border-t border-white/10 mt-20">
+    <footer className="bg-background-dark border-t border-white/10 mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold font-display text-gradient mb-4">Link Up</h3>
+            <div className="flex items-center space-x-2 mb-4">
+              <Sparkles className="w-6 h-6 text-primary" />
+              <h3 className="text-xl font-bold font-display text-gradient">WeEvent</h3>
+            </div>
             <p className="text-sm text-gray-400 mb-4">
-              Conectando pessoas, cenas e experiências.
+              A rede social que conecta você aos eventos mais incríveis.
             </p>
             <div className="flex space-x-4">
               <a 
-                href="https://www.linkedin.com/company/linkup" 
+                href="https://www.linkedin.com/company/weevent" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                aria-label="LinkedIn da Link Up"
+                aria-label="LinkedIn do WeEvent"
                 className="text-gray-400 hover:text-primary transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a 
-                href="https://www.instagram.com/linkup" 
+                href="https://www.instagram.com/weevent" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                aria-label="Instagram da Link Up"
+                aria-label="Instagram do WeEvent"
                 className="text-gray-400 hover:text-primary transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a 
-                href="https://twitter.com/linkup" 
+                href="https://twitter.com/weevent" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                aria-label="Twitter da Link Up"
+                aria-label="Twitter do WeEvent"
                 className="text-gray-400 hover:text-primary transition-colors"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a 
-                href="mailto:contato@linkup.app" 
+                href="mailto:contato@weevent.app" 
                 aria-label="E-mail de contato"
                 className="text-gray-400 hover:text-primary transition-colors"
               >
@@ -52,7 +55,29 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
+          {/* Produto */}
+          <div>
+            <h4 className="font-semibold mb-4">Produto</h4>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li>
+                <Link href="/plataforma" className="hover:text-primary transition-colors">
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link href="/plataforma" className="hover:text-primary transition-colors">
+                  Preços
+                </Link>
+              </li>
+              <li>
+                <Link href="/contato" className="hover:text-primary transition-colors">
+                  FAQ
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Empresa */}
           <div>
             <h4 className="font-semibold mb-4">Empresa</h4>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -62,22 +87,10 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/plataforma" className="hover:text-primary transition-colors">
-                  A Plataforma
-                </Link>
-              </li>
-              <li>
                 <Link href="/contato" className="hover:text-primary transition-colors">
                   Contato
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold mb-4">Recursos</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link href="/produtores" className="hover:text-primary transition-colors">
                   Para Produtores
@@ -110,7 +123,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {currentYear} Link Up. Todos os direitos reservados.</p>
+          <p>&copy; {currentYear} WeEvent. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

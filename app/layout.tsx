@@ -13,25 +13,25 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Link Up — Conecte-se com o seu próximo evento',
-    template: '%s | Link Up',
+    default: 'WeEvent — Descubra os Melhores Rolês',
+    template: '%s | WeEvent',
   },
-  description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar. Plataforma social para eventos.',
-  keywords: 'eventos, rede social, plataforma de eventos, conexão, experiências',
-  authors: [{ name: 'Link Up' }],
-  creator: 'Link Up',
-  metadataBase: new URL('https://linkup.app'),
+  description: 'A rede social que conecta você aos eventos mais incríveis da sua cidade. Confirme presença, encontre amigos e viva experiências únicas.',
+  keywords: 'eventos, festas, rolês, rede social, plataforma de eventos, gamificação, caronas, eventos próximos',
+  authors: [{ name: 'WeEvent' }],
+  creator: 'WeEvent',
+  metadataBase: new URL('https://weevent.app'),
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    siteName: 'Link Up',
-    title: 'Link Up — Conecte-se com o seu próximo evento',
-    description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar.',
+    siteName: 'WeEvent',
+    title: 'WeEvent — Descubra os Melhores Rolês',
+    description: 'A rede social que conecta você aos eventos mais incríveis da sua cidade.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Link Up — Conecte-se com o seu próximo evento',
-    description: 'A Link Up conecta pessoas, cenas e experiências — tudo em um só lugar.',
+    title: 'WeEvent — Descubra os Melhores Rolês',
+    description: 'A rede social que conecta você aos eventos mais incríveis da sua cidade.',
   },
   robots: {
     index: true,

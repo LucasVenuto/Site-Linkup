@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Header() {
@@ -20,9 +20,9 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 glass-effect">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group" aria-label="Link Up - Página inicial">
-            <Zap className="w-6 h-6 text-primary group-hover:text-neon-purple transition-colors" aria-hidden="true" />
-            <span className="text-xl font-bold font-display text-gradient">Link Up</span>
+          <Link href="/" className="flex items-center space-x-2 group" aria-label="WeEvent - Página inicial">
+            <Sparkles className="w-6 h-6 text-primary group-hover:text-neon-purple transition-colors" aria-hidden="true" />
+            <span className="text-xl font-bold font-display text-gradient">WeEvent</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -37,10 +37,16 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/produtores"
-              className="px-4 py-2 bg-gradient-primary text-white rounded-full hover:glow-effect transition-all font-medium"
+              href="/contato"
+              className="px-4 py-2 text-sm font-medium hover:text-primary transition-colors"
             >
-              Começar
+              Login
+            </Link>
+            <Link
+              href="/contato"
+              className="px-6 py-2 neon-button rounded-full text-sm"
+            >
+              Cadastrar
             </Link>
           </div>
 
@@ -74,6 +80,22 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
+              <div className="pt-4 border-t border-white/10 space-y-2">
+                <Link
+                  href="/contato"
+                  onClick={() => setIsOpen(false)}
+                  className="block py-2 text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/contato"
+                  onClick={() => setIsOpen(false)}
+                  className="block py-2 px-4 neon-button rounded-full text-sm text-center"
+                >
+                  Cadastrar
+                </Link>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

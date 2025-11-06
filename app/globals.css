@@ -2,29 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @layer base {
   body {
-    @apply bg-black text-white font-sans;
+    @apply bg-background-dark text-white font-sans;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-neon-purple;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-neon-purple to-neon-cyan;
   }
   
   .bg-gradient-primary {
-    @apply bg-gradient-to-br from-primary via-purple-600 to-neon-purple;
+    @apply bg-gradient-to-br from-primary via-neon-purple to-neon-cyan;
   }
   
   .glass-effect {
-    @apply backdrop-blur-sm bg-white/5 border border-white/10;
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl;
   }
   
   .glow-effect {
-    box-shadow: 0 0 20px rgba(106, 27, 154, 0.5);
+    box-shadow: 0 0 20px hsl(270, 91%, 65%, 0.5), 0 0 40px hsl(270, 91%, 65%, 0.3);
+  }
+  
+  .neon-button {
+    @apply bg-gradient-primary text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300;
+    box-shadow: 0 0 20px hsl(270, 91%, 65%, 0.4);
+  }
+  
+  .neon-button:hover {
+    box-shadow: 0 0 30px hsl(270, 91%, 65%, 0.6), 0 0 50px hsl(270, 91%, 65%, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .feature-card {
+    @apply glass-card p-6 transition-all duration-300;
+  }
+  
+  .feature-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px hsl(270, 91%, 65%, 0.3);
+  }
+  
+  .testimonial-card {
+    @apply glass-card p-6;
+  }
+  
+  .shadow-neon {
+    box-shadow: 0 0 20px hsl(270, 91%, 65%, 0.4);
   }
 }
 
